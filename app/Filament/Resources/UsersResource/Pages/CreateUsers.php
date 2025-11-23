@@ -11,10 +11,17 @@ class CreateUsers extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Remover roles y permissions del array de datos
+        // Encriptar contraseña si existe
+        if (! empty($data['password'])) {
+            $data['password'] = bcrypt($data['password']);
+        }
+
+        // Eliminar campos que no pertenecen al modelo
         unset($data['roles'], $data['permissions']);
+
         return $data;
     }
+
 
     protected function afterCreate(): void
     {

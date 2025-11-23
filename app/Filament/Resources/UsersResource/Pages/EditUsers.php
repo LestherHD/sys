@@ -26,7 +26,23 @@ class EditUsers extends EditRecord
 
     protected function afterSave(): void
     {
-        $this->record->syncRoles($this->data['roles'] ?? []);
-        $this->record->syncPermissions($this->data['permissions'] ?? []);
+        // Obtener roles
+        $roles = $this->data['roles'] ?? [];
+        if (is_string($roles)) {
+            $roles = json_decode($roles, true) ?? [];
+        }
+        $roles = array_map('intval', $roles);
+
+        // Obtener permissions
+        $permissions = $this->data['permissions'] ?? [];
+        if (is_string($permissions)) {
+            $permissions = json_decode($permissions, true) ?? [];
+        }
+        $permissions = array_map('intval', $permissions);
+
+        // Sincronizar
+        $this->record->syncRoles($roles);
+        $this->record->syncPermissions($permissions);
     }
+
 }

@@ -23,9 +23,13 @@ class PermissionsResource extends Resource
         return $form->schema([
 
             Forms\Components\TextInput::make('name')
+                ->label('Nombre')
                 ->required(),
 
-            Forms\Components\Hidden::make('guard_name')
+            Forms\Components\TextInput::make('subject')
+                ->required(false),
+
+            Forms\Components\TextInput::make('guard_name')
                 ->default('web')
                 ->dehydrated(true),
 
@@ -39,9 +43,13 @@ class PermissionsResource extends Resource
     {
         return $table->columns([
             Tables\Columns\TextColumn::make('name'),
+            Tables\Columns\TextColumn::make('guard_name'),
+            Tables\Columns\TextColumn::make('Subject'),
         ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
             ]);
     }
 

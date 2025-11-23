@@ -18,6 +18,11 @@ class CreatePermissions extends CreateRecord
 
     protected function afterCreate(): void
     {
-        $this->record->syncRoles($this->data['roles'] ?? []);
+        $roleIds = $this->data['roles'] ?? [];
+
+        if (!empty($roleIds)) {
+            $roles = \Spatie\Permission\Models\Role::whereIn('id', $roleIds)->get();
+            $this->record->syncRoles($roles);
+        }
     }
 }

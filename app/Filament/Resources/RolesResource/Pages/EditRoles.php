@@ -25,6 +25,17 @@ class EditRoles extends EditRecord
 
     protected function afterSave(): void
     {
-        $this->record->syncPermissions($this->data['permissions'] ?? []);
+        $permissions = $this->data['permissions'] ?? [];
+
+        // Si viene como JSON → convertir a array
+        if (is_string($permissions)) {
+            $permissions = json_decode($permissions, true) ?? [];
+        }
+
+        // Convertir valores a enteros
+        $permissions = array_map('intval', $permissions);
+
+        $this->record->syncPermissions($permissions);
     }
+
 }

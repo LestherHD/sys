@@ -12,8 +12,11 @@ class InitRolesSeeder extends Seeder
 {
     public function run(): void
     {
-        // Crear rol administrador
-        $adminRole = Role::firstOrCreate(['name' => 'Administrador']);
+        // Crear rol administrador con guard_name
+        $adminRole = Role::firstOrCreate(
+            ['name' => 'Administrador'],
+            ['guard_name' => 'web']
+        );
 
         // Crear usuario admin
         $admin = User::firstOrCreate(
@@ -24,7 +27,9 @@ class InitRolesSeeder extends Seeder
             ]
         );
 
-        // Asignar rol
-        $admin->assignRole($adminRole);
+        // Sincronizar roles (elimina roles previos y asigna el nuevo)
+        $admin->syncRoles([$adminRole]);
+
+        $this->command->info("✔️ Usuario administrador creado con email: admin@admin.com y contraseña: admin123");
     }
 }

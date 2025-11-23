@@ -33,7 +33,7 @@
         </div>
 
         {{-- BOTONES --}}
-        <div class="flex flex-col justify-center gap-2 pt-8">
+        <div class="h-full flex flex-col items-center justify-center gap-3">
             <button
                 type="button"
                 onclick="dualListMove('left-{{ $id }}', 'right-{{ $id }}', '{{ $id }}')"

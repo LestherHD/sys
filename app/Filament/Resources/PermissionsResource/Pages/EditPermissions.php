@@ -24,6 +24,13 @@ class EditPermissions extends EditRecord
 
     protected function afterSave(): void
     {
-        $this->record->syncRoles($this->data['roles'] ?? []);
+        $roleIds = $this->data['roles'] ?? [];
+
+        if (!empty($roleIds)) {
+            $roles = \Spatie\Permission\Models\Role::whereIn('id', $roleIds)->get();
+            $this->record->syncRoles($roles);
+        } else {
+            $this->record->syncRoles([]);
+        }
     }
 }
