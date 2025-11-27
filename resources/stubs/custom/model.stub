@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+{{ softDeletesImport }}{{ passwordImports }}
+class {{ model }} extends Model
+{
+    use HasFactory{{ softDeletesTrait }};
+
+    protected $table = '{{ table }}';
+
+    protected $fillable = [
+        {{ fillableFields }}
+    ];
+
+    {{ casts }}
+{{ passwordMutator }}
+    /*
+    |--------------------------------------------------------------------------
+    | RELACIONES AUTOMÁTICAS
+    |--------------------------------------------------------------------------
+    */
+    {{ relationships }}
+}

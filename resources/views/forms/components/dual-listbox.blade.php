@@ -110,7 +110,10 @@
         if (rightSelect && hiddenInput) {
             const selected = [...rightSelect.options].map(opt => opt.value);
             hiddenInput.value = JSON.stringify(selected);
-            hiddenInput.dispatchEvent(new Event('input', { bubbles: true }));
+
+            // Disparar evento de cambio para Livewire
+            const event = new Event('change', { bubbles: true });
+            hiddenInput.dispatchEvent(event);
         }
     }
 </script>

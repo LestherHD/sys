@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\{{ model }};
+use Illuminate\Http\Request;
+
+class {{ model }}Controller extends Controller
+{
+    public function index()
+    {
+        return {{ model }}::all();
+    }
+
+    public function store(Request $request)
+    {
+        return {{ model }}::create($request->all());
+    }
+
+    public function show({{ model }} ${{ modelVariable }})
+    {
+        return ${{ modelVariable }};
+    }
+
+    public function update(Request $request, {{ model }} ${{ modelVariable }})
+    {
+        ${{ modelVariable }}->update($request->all());
+        return ${{ modelVariable }};
+    }
+
+    public function destroy({{ model }} ${{ modelVariable }})
+    {
+        ${{ modelVariable }}->delete();
+        return response()->json(['message' => 'Eliminado correctamente']);
+    }
+}

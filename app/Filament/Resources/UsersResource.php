@@ -33,7 +33,9 @@ class UsersResource extends Resource
 
             Forms\Components\TextInput::make('password')
                 ->password()
-                ->required(fn ($record) => $record === null),
+                ->required(fn ($record) => $record === null)
+                ->dehydrateStateUsing(fn ($state) => filled($state) ? $state : null)
+                ->dehydrated(fn ($state) => filled($state)),
 
             DualListBox::make('roles')
                 ->label('Roles')
