@@ -18,6 +18,7 @@ class AutoScaffoldCommand extends Command
         $table = $this->argument('table');
         $modelPlural = Str::plural($model);
         $modelVariable = Str::camel($model);
+        $modelLabel = Str::headline($model); // Ej: "Categoria Menu"
 
         $this->info("🛡️  GESTOR SYSBASE BLINDADO: $model");
         $this->line("-----------------------------------------------------");
@@ -108,7 +109,7 @@ class AutoScaffoldCommand extends Command
             ]);
 
             // Pages
-            $this->createFileSafely('page_list.stub', "$pagesDir/List{$modelPlural}.php", ['{{ model }}' => $model, '{{ modelPlural }}' => $modelPlural]);
+            $this->createFileSafely('page_list.stub', "$pagesDir/List{$modelPlural}.php", ['{{ model }}' => $model, '{{ modelPlural }}' => $modelPlural, '{{ modelLabel }}' => $modelLabel]);
             $this->createFileSafely('page_create.stub', "$pagesDir/Create{$model}.php", ['{{ model }}' => $model]);
             $this->createFileSafely('page_view.stub', "$pagesDir/View{$model}.php", ['{{ model }}' => $model]);
             $this->createFileSafely('page_edit.stub', "$pagesDir/Edit{$model}.php", ['{{ model }}' => $model]);

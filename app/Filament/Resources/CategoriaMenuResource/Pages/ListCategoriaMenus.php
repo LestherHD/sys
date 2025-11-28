@@ -16,4 +16,36 @@ class ListCategoriaMenus extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    public function deleteRecord($recordId): void
+    {
+        $record = \App\Models\CategoriaMenu::find($recordId);
+
+        if ($record) {
+            $record->delete();
+
+            \Filament\Notifications\Notification::make()
+                ->title('Categoría eliminada correctamente')
+                ->success()
+                ->send();
+
+            $this->dispatch('$refresh');
+        }
+    }
+
+    public function restoreRecord($recordId): void
+    {
+        $record = \App\Models\CategoriaMenu::withTrashed()->find($recordId);
+
+        if ($record) {
+            $record->restore();
+
+            \Filament\Notifications\Notification::make()
+                ->title('Categoría restaurada correctamente')
+                ->success()
+                ->send();
+
+            $this->dispatch('$refresh');
+        }
+    }
 }

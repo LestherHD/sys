@@ -16,4 +16,36 @@ class List{{ modelPlural }} extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    public function deleteRecord($recordId): void
+    {
+        $record = \App\Models\{{ model }}::find($recordId);
+
+        if ($record) {
+            $record->delete();
+
+            \Filament\Notifications\Notification::make()
+                ->title('{{ modelLabel }} eliminado correctamente')
+                ->success()
+                ->send();
+
+            $this->dispatch('$refresh');
+        }
+    }
+
+    public function restoreRecord($recordId): void
+    {
+        $record = \App\Models\{{ model }}::withTrashed()->find($recordId);
+
+        if ($record) {
+            $record->restore();
+
+            \Filament\Notifications\Notification::make()
+                ->title('{{ modelLabel }} restaurado correctamente')
+                ->success()
+                ->send();
+
+            $this->dispatch('$refresh');
+        }
+    }
 }

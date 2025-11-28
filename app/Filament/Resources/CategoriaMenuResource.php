@@ -54,6 +54,26 @@ class CategoriaMenuResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('delete')
+                    ->label('Eliminar')
+                    ->icon('heroicon-o-trash')
+                    ->color('danger')
+                    ->requiresConfirmation(false)
+                    ->action(function (CategoriaMenu $record, Tables\Actions\Action $action) {
+                        $livewire = $action->getLivewire();
+                        $livewire->deleteRecord($record->id);
+                    })
+                    ->hidden(fn (CategoriaMenu $record): bool => $record->trashed()),
+                Tables\Actions\Action::make('restore')
+                    ->label('Restaurar')
+                    ->icon('heroicon-o-arrow-path')
+                    ->color('success')
+                    ->requiresConfirmation(false)
+                    ->action(function (CategoriaMenu $record, Tables\Actions\Action $action) {
+                        $livewire = $action->getLivewire();
+                        $livewire->restoreRecord($record->id);
+                    })
+                    ->visible(fn (CategoriaMenu $record): bool => $record->trashed()),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

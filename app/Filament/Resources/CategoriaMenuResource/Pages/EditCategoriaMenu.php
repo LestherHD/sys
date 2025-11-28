@@ -13,9 +13,11 @@ class EditCategoriaMenu extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
-            Actions\ForceDeleteAction::make(),
-            Actions\RestoreAction::make(),
+            Actions\Action::make('back')
+                ->label('Volver')
+                ->url(fn () => CategoriaMenuResource::getUrl('index'))
+                ->color('gray')
+                ->icon('heroicon-o-arrow-left'),
         ];
     }
 }

@@ -13,6 +13,11 @@ class ViewCategoriaMenu extends ViewRecord
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('back')
+                ->label('Volver')
+                ->url(fn () => CategoriaMenuResource::getUrl('index'))
+                ->color('gray')
+                ->icon('heroicon-o-arrow-left'),
             Actions\EditAction::make(),
         ];
     }
